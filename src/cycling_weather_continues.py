@@ -62,20 +62,7 @@ def split_date_continues():
     return final
 
 def cycling_weather_continues(station):
-    weather_df = pd.read_csv('src/kumpula-weather-2017.csv')
-    df = split_date_continues()
-
-    new_df = pd.merge(df.loc[:, 'Weekday':'Hour'], df.loc[:, station], left_index=True, right_index=True)
-    new_df = new_df[new_df.Year == 2017]
-    a = new_df.groupby(['Month', 'Day'])[station].sum()
-    merged_df = pd.merge(weather_df, a, right_on=['Day', 'Month'], left_on=['d', 'm'])
-    merged_df.fillna(method='ffill', inplace=True)
-    model = LinearRegression(fit_intercept=True)
-    x = merged_df.loc[:, ['Precipitation amount (mm)', 'Snow depth (cm)', 'Air temperature (degC)']]
-    y = merged_df.loc[:, station]
-    model.fit(x, y)
-    score = model.score(x, y)
-    return model.coef_, score
+    pass
     
 def main():
     coef, score = cycling_weather_continues("Baana")
